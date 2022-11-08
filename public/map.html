@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" href="/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>高德地图</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .amap-logo {
+            opacity: 0;
+        }
+
+        .amap-copyright {
+            opacity: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 60px;
+            width: 60px;
+            padding: 0px 6px;
+            border: 3px solid #ff6000;
+            border-radius: 12px;
+        }
+
+        .rect {
+            border-radius: 5px;
+            height: 34px;
+            width: 4px;
+            background-color: #ff6000;
+            animation: move 0.6s linear infinite;
+        }
+
+        .one, .five {
+            animation-delay: 0.1s;
+        }
+
+        .two, .four {
+            animation-delay: 0.2s;
+        }
+
+        .three {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes move {
+            from {
+                height: 34px;
+            }
+            50% {
+                height: 5px;
+            }
+            to {
+                height: 34px;
+            }
+        }
+
+        #loading {
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div id="loading">
+    <div class="wrapper">
+        <div class="rect one"></div>
+        <div class="rect two"></div>
+        <div class="rect three"></div>
+        <div class="rect four"></div>
+        <div class="rect five"></div>
+    </div>
+</div>
+<div id="container"></div>
+</body>
+
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=ab1d24b3e98c54f59ac0fcca38893ce9"></script>
+<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+<script type="text/javascript">
+  const map = new AMap.Map('container', {
+    resizeEnable: true,
+    center: [116.397428, 39.90923],
+    zoom: 13,
+    viewMode: '3D',
+    cursor: 'hand' // 鼠标在地图上的表现形式
+  })
+
+  //实时路况图层
+  const trafficLayer = new AMap.TileLayer.Traffic({
+    zIndex: 10
+  })
+  map.add(trafficLayer)//添加图层到地图
+
+  // 地图加载完成
+  map.on('complete', function () {
+    document.querySelector('#loading').style.display = 'none'
+    log.success('地图加载完成！')
+  })
+
+</script>
+<!--<script type="text/javascript"-->
+<!--        src="https://webapi.amap.com/maps?v=1.4.15&key=ab1d24b3e98c54f59ac0fcca38893ce9&callback=init"></script>-->
+
+</html>
